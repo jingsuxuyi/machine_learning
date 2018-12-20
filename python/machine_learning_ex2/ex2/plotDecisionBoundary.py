@@ -32,5 +32,11 @@ def plotDecisionBoundary(theta, X, y):
         plt.legend()
         plt.axis([30, 100, 30, 100])
     else:
-        pass
+        u = np.linspace(-1, 1.5, 50)
+        v = np.linspace(-1, 1.5, 50)
+        z = np.zeros((np.size(u), np.size(v)))
         
+        for i in np.arange(np.size(u)):
+            for j in np.arange(np.size(v)):
+                z[i,j] = mapFeature(u[i], v[j]).dot(theta)
+        plt.contour(u, v, z.T, [0, 0], linewidths=2)
