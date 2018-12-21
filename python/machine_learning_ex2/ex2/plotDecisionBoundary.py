@@ -7,6 +7,7 @@ Created on Thu Dec 20 20:05:28 2018
 import matplotlib.pyplot as plt
 import plotData
 import numpy as np
+import mapFeature
 
 def plotDecisionBoundary(theta, X, y):
 #PLOTDECISIONBOUNDARY Plots the data points X and y into a new figure with
@@ -19,7 +20,9 @@ def plotDecisionBoundary(theta, X, y):
 #   2) MxN, N>3 matrix, where the first column is all-ones    
     
     #plot Data
-    plotData.plotData(X[:, 1:], y)
+    plotData.plotData(X[:, 1:], y, "Admited", "Not admited")
+    plt.xlabel("Exam 1 score")
+    plt.ylabel("Exam 2 score")  
     
     m, n = X.shape
     if n <= 3:
@@ -38,5 +41,6 @@ def plotDecisionBoundary(theta, X, y):
         
         for i in np.arange(np.size(u)):
             for j in np.arange(np.size(v)):
-                z[i,j] = mapFeature(u[i], v[j]).dot(theta)
-        plt.contour(u, v, z.T, [0, 0], linewidths=2)
+                z[i,j] = mapFeature.mapFeature(u[i], v[j]).dot(theta)
+        plt.contour(u, v, z.T, levels=[0], linewidths=2)
+        plt.legend()

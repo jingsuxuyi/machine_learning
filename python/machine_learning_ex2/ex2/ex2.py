@@ -29,6 +29,7 @@ import scipy.optimize as opt
 import plotDecisionBoundary
 import sigmoid
 import predict
+import matplotlib.pyplot as plt
 
 ## Initialization
 data = np.loadtxt("ex2data1.txt", delimiter=",")
@@ -39,7 +40,11 @@ X, y = data[:,0:2], data[:,2]
 
 print("'Plotting data with + indicating (y = 1) examples and o indicating (y = 0) examples.")
 
-plotData.plotData(X, y)
+plotData.plotData(X, y, "Admited", "Not admited")
+plt.xlabel("Exam 1 score")
+plt.ylabel("Exam 2 score")
+plt.legend(loc="upper right")
+plt.show()
 
 input("Program paused. Press enter to continue.")
 

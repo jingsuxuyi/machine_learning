@@ -17,7 +17,7 @@ def mapFeature(X1, X2):
 #   Inputs X1, X2 must be the same size
 #
     degree = 6
-    out = np.ones((X1[:,0].size, 1))
+    out = np.ones((X1.size, 1))
     for i in np.arange(degree) + 1:
         for j in np.arange(i + 1):
             temp = X1 ** (i - j) * (X2 ** j)
