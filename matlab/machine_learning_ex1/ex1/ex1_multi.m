@@ -143,14 +143,13 @@ theta = normalEqn(X, y);
 
 % Display normal equation's result
 fprintf('Theta computed from the normal equations: \n');
-000000fprintf(' %f \n', theta);
+fprintf(' %f \n', theta);
 fprintf('\n');
 
 
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
 price = [1 1650 3]*theta; % You should change this
-0000000000000000000000000000000000000000000
 
 % ============================================================
 

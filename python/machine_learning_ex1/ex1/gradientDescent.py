@@ -9,8 +9,8 @@ import computeCost
 
 
 def gradientDescent(X, y, theta, alpha, num_iters):
-    m = max(y.shape)
-    J_history = np.zeros((num_iters, 1))
+    m = y.size
+    J_history = np.zeros(num_iters)
     for i in np.arange(num_iters):
         theta = theta - alpha / m * X.T.dot(X.dot(theta) - y)
         J_history[i] = computeCost.computeCost(X, y, theta)

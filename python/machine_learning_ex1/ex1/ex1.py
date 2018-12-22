@@ -11,6 +11,7 @@ import plotData
 import computeCost
 import gradientDescent
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # ==================== Part 1: Basic Function ====================
 print('Running warmUpExercise ...')
@@ -26,24 +27,23 @@ print('Plotting Data ...')
 
 data = np.loadtxt('ex1data1.txt', delimiter=',')
 #split the 2-D array to three array, the last is empty array
-data = np.hsplit(data, ((data.shape)[1]-1, data.shape[1]))
-X, y = data[0], data[1]
+#data = np.hsplit(data, ((data.shape)[1]-1, data.shape[1]))
+X, y = data[:, 0], data[:, 1]
 plotData.plotData(X, y)
 
-print('Program paused. Press enter to continue.')
-input() #for pause
+input('Program paused. Press enter to continue.') #for pause
 
 # =================== Part 3: Cost and Gradient descent ===================
-m = max(y.shape)
+m = y.size
 
 ##reshape to convert row vector to column vector
 ##besides, np.ones is row vector, not column vector
 #X = np.insert(X.reshape(-1, 1), 0, np.ones((1, m)), axis=1)
 #y = y.reshape(-1, 1) #np.extend_dims(y, axis=1)
 #add all one before X
-X = np.hstack((np.ones((m, 1)), X))
+X = np.hstack((np.ones((m, 1)), X.reshape(-1, 1)))
 
-theta = np.zeros((2,1))
+theta = np.zeros(2)
 iterations = 1500
 alpha = 0.01
 
@@ -55,31 +55,30 @@ print('With theta = [0 ; 0]\nCost computed = %f' % J)
 print('Expected cost value (approx) 32.07')
 
 #further testing of the cost function
-J = computeCost.computeCost(X, y, np.array([-1, 2]).reshape(2,1))
+J = computeCost.computeCost(X, y, np.array([-1, 2]))
 print('With theta = [-1 ; 2]\nCost computed = %f' % J)
 print('Expected cost value (approx) 54.24')
 
-print('Program paused. Press enter to continue.')
-input() #for pause
+input('Program paused. Press enter to continue.') #for pause
 
 print("Running Gradient Descent ...")
 
 theta =gradientDescent.gradientDescent(X, y, theta, alpha, iterations)
 
 print("Theta found by gradient descent:")
-print(theta.ravel())
+print(theta)
 print("Expected theta values (approx)")
 print("[-3.6303  1.1664]")
 
-plt.plot(X[:,1], X.dot(theta).ravel(), label="Linear regression")
+plt.plot(X[:,1], X.dot(theta), label="Linear regression")
 plt.legend()
 
 #print(theta)
 # Predict values for population sizes of 35,000 and 70,000
-predict1 = np.array([[1, 3.5]]).dot(theta)
-print("For population = 35,000, we predict a profit of %f" % (predict1[0,0] * 10000))
+predict1 = np.array([1, 3.5]).dot(theta)
+print("For population = 35,000, we predict a profit of %f" % (predict1 * 10000))
 predict2 = np.array([[1, 7]]).dot(theta)
-print("For population = 70,000, we predict a profit of %f" % (predict2[0,0] * 10000))
+print("For population = 70,000, we predict a profit of %f" % (predict2 * 10000))
 
 print('Program paused. Press enter to continue.')
 input() #for pause
@@ -99,7 +98,7 @@ J_vals = np.zeros((len_theta0_vals, len_theta1_vals))
 # Fill out J_vals
 for i in range(len_theta0_vals):
     for j in range(len_theta1_vals):
-        t = np.array([[theta0_vals[i]], [theta1_vals[j]]])
+        t = np.array([theta0_vals[i], theta1_vals[j]])
         J_vals[i, j] = computeCost.computeCost(X, y, t)
         
 xx, yy = np.meshgrid(theta0_vals, theta1_vals)

@@ -19,7 +19,7 @@ print("Loading data...")
 data = np.loadtxt("ex1data2.txt", delimiter=',')
 X = data[:, :2]
 # convert 1-D array to 2-D for matrix operation 
-y = data[:, 2][:, np.newaxis]
+y = data[:, 2]
 m = y.size
 
 # Print out some data points
@@ -40,7 +40,7 @@ print("Running gradient descent ...")
 alpha = 0.01
 num_iters = 400
 
-theta = np.zeros((3,1))
+theta = np.zeros(3)
 
 theta, J_history = gradientDescentMulti.gradientDescentMulti(X, y, theta, alpha, num_iters)
 
@@ -59,7 +59,7 @@ print(theta)
 # Recall that the first column of X is all-ones. Thus, it does
 # not need to be normalized.
 
-price = np.hstack((np.ones(1), (np.array([1650, 3]) - mu) / sigma))[np.newaxis, :].dot(theta)
+price = np.hstack((np.ones(1), (np.array([1650, 3]) - mu) / sigma)).dot(theta)
 
 print("Predicted price of a 1650 sq-ft, 3 br house (using gradient descent): ", price)
 input("Program paused. Press enter to continue.")
@@ -72,13 +72,13 @@ print("Solving with normal equations...")
 data = np.loadtxt("ex1data2.txt", delimiter=',')
 X = data[:, :2]
 # convert 1-D array to 2-D for matrix operation 
-y = data[:, 2][:, np.newaxis]
+y = data[:, 2]
 m = y.size
 X = np.hstack((np.ones((m, 1)), X))
 theta=normalEqn.normalEqn(X, y)
 print("Theta computed from the normal equations:")
 print(theta, theta.shape)
 
-price = np.hstack((np.ones(1), np.array([1650, 3])))[np.newaxis, :].dot(theta)
+price = np.hstack((np.ones(1), np.array([1650, 3]))).dot(theta)
 
 print("Predicted price of a 1650 sq-ft, 3 br house (using gradient descent): ", price)

@@ -9,9 +9,9 @@ import computeCostMulti
 
 def gradientDescentMulti(X, y, theta, alpha, num_iters):
     m = y.size
-    J_history = np.zeros((num_iters, 1))
+    J_history = np.zeros(num_iters)
     
     for i in np.arange(num_iters):
         theta = theta - alpha / m * X.T.dot(X.dot(theta) - y)
-        J_history[i, 0] = computeCostMulti.computeCostMulti(X, y, theta)
+        J_history[i] = computeCostMulti.computeCostMulti(X, y, theta)
     return theta, J_history
