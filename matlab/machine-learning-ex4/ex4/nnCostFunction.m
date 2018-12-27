@@ -62,9 +62,31 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% X shape is 5000x401
+X = [ones(m, 1),  X];
+%z_2 shape is 5000x25
+z_2 = X * Theta1';
+a_2 = sigmoid(z_2);
 
+%a_2 shape is 5000x26
+a_2 = [ones(m, 1),  a_2];
+%z_3 shape is 5000x10
+z_3 = a_2 * Theta2';
+a_3 = sigmoid(z_3);
 
+%recode y to vector, shape is 5000x10
+y_vec = zeros(m, num_labels);
+for i=1: m
+	y_vec(i, y(i,1)) = 1;
+end
 
+J = sum(sum((-y_vec .* log(a_3) - (1 - y_vec) .* log(1 - a_3)),  1) ) / m;
+
+%calc the regularization
+theta1_r = Theta1(:, 2:end);
+theta2_r = Theta2(:, 2:end);
+theta_sum = sum(sum(theta1_r .^ 2)) + sum(sum(theta2_r .^ 2));
+J = J + lambda * theta_sum /  2 / m;
 
 
 
