@@ -62,6 +62,8 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+
+
 % X shape is 5000x401
 X = [ones(m, 1),  X];
 %z_2 shape is 5000x25
@@ -88,18 +90,16 @@ theta2_r = Theta2(:, 2:end);
 theta_sum = sum(sum(theta1_r .^ 2)) + sum(sum(theta2_r .^ 2));
 J = J + lambda * theta_sum /  2 / m;
 
+%calc the gradient
+%shape is 5000x10
+delta_l_3 = a_3 - y_vec;
+%shape is 10x26=10x5000 * 5000x26
+Theta2_grad = delta_l_3' * a_2 / m + lambda / m * [zeros(num_labels, 1), Theta2(:, 2:end)];
 
-
-
-
-
-
-
-
-
-
-
-
+%shape is 5000x26=5000x10 * 10X26
+delta_l_2 = (delta_l_3 * Theta2) .* (a_2 .* (1 - a_2));
+%shape is 25x401=25x5000 * 5000x401 
+Theta1_grad = delta_l_2(:, 2:end)' *X / m + lambda / m * [zeros(hidden_layer_size, 1), Theta1(:, 2:end)];
 
 
 % -------------------------------------------------------------
