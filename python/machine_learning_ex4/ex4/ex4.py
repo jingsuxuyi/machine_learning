@@ -17,6 +17,7 @@
 import numpy as np
 import scipy.io as sio
 import displayData
+import nnCostFunction
 
 
 ## Setup the parameters you will use for this exercise
@@ -61,3 +62,53 @@ Theta1, Theta2 = mat_theta['Theta1'], mat_theta['Theta2']
 # Unroll parameters 
 nn_params = np.r_[Theta1.flatten(order='F'), Theta2.flatten(order='F')]
 
+## ================ Part 2: Loading Parameters ================
+# In this part of the exercise, we load some pre-initialized 
+# neural network parameters.
+
+print("Loading Saved Neural Network Parameters ...")
+
+# Load the weights into variables Theta1 and Theta2
+mat_theta = sio.loadmat("ex4weights.mat")
+Theta1, Theta2 = mat_theta['Theta1'], mat_theta['Theta2']
+
+# Unroll parameters 
+nn_params = np.r_[Theta1.flatten(order='F'), Theta2.flatten(order='F')]
+
+## ================ Part 3: Compute Cost (Feedforward) ================
+#  To the neural network, you should first start by implementing the
+#  feedforward part of the neural network that returns the cost only. You
+#  should complete the code in nnCostFunction.m to return cost. After
+#  implementing the feedforward to compute the cost, you can verify that
+#  your implementation is correct by verifying that you get the same cost
+#  as us for the fixed debugging parameters.
+#
+#  We suggest implementing the feedforward cost *without* regularization
+#  first so that it will be easier for you to debug. Later, in part 4, you
+#  will get to implement the regularized cost.
+#
+print("Feedforward Using Neural Network ...")
+
+lam = 0
+
+J = nnCostFunction.nnCostFunction(nn_params, input_layer_size, 
+							hidden_layer_size, num_labels, X, y, lam)
+							
+print('Cost at parameters (loaded from ex4weights): {:.6f} \n(this value should be about 0.287629)\n'.format(J))
+
+input("Program paused. Press enter to continue.")
+
+# =============== Part 4: Implement Regularization ===============
+#  Once your cost function implementation is correct, you should now
+#  continue to implement the regularization with the cost.
+#
+print("Checking Cost Function (w/ Regularization) ... ")
+
+lam = 1
+
+J = nnCostFunction.nnCostFunction(nn_params, input_layer_size, 
+							hidden_layer_size, num_labels, X, y, lam)
+
+print('Cost at parameters (loaded from ex4weights): {:.6f} \n(this value should be about 0.383770)\n'.format(J))
+		
+input("Program paused. Press enter to continue.")		
