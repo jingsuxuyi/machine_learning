@@ -18,6 +18,9 @@ import numpy as np
 import scipy.io as sio
 import displayData
 import nnCostFunction
+import sigmoidGradient
+import randInitializeWeights
+import checkNNGradients
 
 
 ## Setup the parameters you will use for this exercise
@@ -112,3 +115,48 @@ J = nnCostFunction.nnCostFunction(nn_params, input_layer_size,
 print('Cost at parameters (loaded from ex4weights): {:.6f} \n(this value should be about 0.383770)\n'.format(J))
 		
 input("Program paused. Press enter to continue.")		
+
+
+## ================ Part 5: Sigmoid Gradient  ================
+#  Before you start implementing the neural network, you will first
+#  implement the gradient for the sigmoid function. You should complete the
+#  code in the sigmoidGradient.m file.
+#
+
+print("Evaluating sigmoid gradient...")
+
+g = sigmoidGradient.sigmoidGradient(np.array([-1, -0.5, 0, 0.5, 1]))
+print("Sigmoid gradient evaluated at [-1 -0.5 0 0.5 1]:\n  ")
+print(g)
+
+input("Program paused. Press enter to continue.")
+
+## ================ Part 6: Initializing Pameters ================
+#  In this part of the exercise, you will be starting to implment a two
+#  layer neural network that classifies digits. You will start by
+#  implementing a function to initialize the weights of the neural network
+#  (randInitializeWeights.m)
+
+print("Initializing Neural Network Parameters ...")
+
+initial_Theta1 = randInitializeWeights.randInitializeWeights(input_layer_size, hidden_layer_size)
+initial_Theta2 = randInitializeWeights.randInitializeWeights(hidden_layer_size, num_labels)
+
+# Unroll parameters
+initial_nn_params = np.r_[initial_Theta1.flatten(order='F'), initial_Theta2.flatten(order='F')]
+
+## =============== Part 7: Implement Backpropagation ===============
+#  Once your cost matches up with ours, you should proceed to implement the
+#  backpropagation algorithm for the neural network. You should add to the
+#  code you've written in nnCostFunction.m to return the partial
+#  derivatives of the parameters.
+#
+
+print("Checking Backpropagation... ")
+
+# Check gradients by running checkNNGradients
+checkNNGradients.checkNNGradients()
+
+input("Program paused. Press enter to continue.")
+
+
