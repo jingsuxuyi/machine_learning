@@ -21,6 +21,7 @@ import nnCostFunction
 import sigmoidGradient
 import randInitializeWeights
 import checkNNGradients
+import scipy.optimize as opt
 
 
 ## Setup the parameters you will use for this exercise
@@ -160,3 +161,29 @@ checkNNGradients.checkNNGradients()
 input("Program paused. Press enter to continue.")
 
 
+## =================== Part 8: Training NN ===================
+#  You have now implemented all the code necessary to train a neural 
+#  network. To train your neural network, we will now use "fmincg", which
+#  is a function which works similarly to "fminunc". Recall that these
+#  advanced optimizers are able to train our cost functions efficiently as
+#  long as we provide them with the gradient computations.
+#
+print('Training Neural Network...')
+
+# You should also try different values of lambda
+lam = 1
+
+# define lambda expression for "short hand"
+costFunc = lambda p: nnCostFunction.nnCostFunction(p, input_layer_size, hidden_layer_size, num_labels, X, y, lam)
+
+gradFunc = lambda p: nnCostFunction.nnGradient(p, input_layer_size, hidden_layer_size, num_labels, X, y, lam)
+
+# optimize the costFun
+result = opt.minimize(fun=costFunc, x0=initial_nn_params, method="TNC", jac=gradFunc, options={'maxiter': 120})
+
+# Obtain Theta1 and Theta2 back from nn_params
+nn_params = result.x				 
+Theta1 = nn_params[0: hidden_layer_size*(input_layer_size+1)].reshape(hidden_layer_size, input_layer_size+1, order='F')
+Theta2 = nn_params[hidden_layer_size*(input_layer_size+1):].reshape(num_labels, hidden_layer_size + 1, order='F')
+
+input("Program paused. Press enter to continue.")
