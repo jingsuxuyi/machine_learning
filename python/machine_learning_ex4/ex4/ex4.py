@@ -22,6 +22,7 @@ import sigmoidGradient
 import randInitializeWeights
 import checkNNGradients
 import scipy.optimize as opt
+import predict
 
 
 ## Setup the parameters you will use for this exercise
@@ -187,3 +188,27 @@ Theta1 = nn_params[0: hidden_layer_size*(input_layer_size+1)].reshape(hidden_lay
 Theta2 = nn_params[hidden_layer_size*(input_layer_size+1):].reshape(num_labels, hidden_layer_size + 1, order='F')
 
 input("Program paused. Press enter to continue.")
+
+
+
+## ================= Part 9: Visualize Weights =================
+#  You can now "visualize" what the neural network is learning by 
+#  displaying the hidden units to see what features they are capturing in 
+#  the data.
+
+print('Visualizing Neural Network...')
+
+displayData.displayData(Theta1[:, 1:])
+
+input('Program paused. Press enter to continue.');
+
+
+## ================= Part 10: Implement Predict =================
+#  After training the neural network, we would like to use it to predict
+#  the labels. You will now implement the "predict" function to use the
+#  neural network to predict the labels of the training set. This lets
+#  you compute the training set accuracy.
+
+pred = predict.predict(Theta1, Theta2, X)
+
+print('\nTraining Set Accuracy: {:f}'.format(np.mean((pred == y).astype(np.float64)) * 100))
