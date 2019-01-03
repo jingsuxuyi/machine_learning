@@ -20,7 +20,10 @@ grad = zeros(size(theta));
 %
 
 
-
+J =(X * theta - y)'* (X * theta - y) ./ (2*m);
+theta_temp = theta;
+theta_temp(1, 1) = 0;
+J = J + theta_temp' * theta_temp * lambda / m / 2;
 
 
 
