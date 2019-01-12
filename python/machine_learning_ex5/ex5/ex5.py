@@ -18,6 +18,7 @@
 import numpy as np
 import scipy.io as sio
 import matplotlib.pyplot as plt
+import linearRegCostFunction
 
 
 ## =========== Part 1: Loading and Visualizing Data =============
@@ -45,4 +46,32 @@ plt.xlabel('Change in water level (x)')
 plt.ylabel('Water flowing out of the dam (y)')
 
 input('Program paused. Press enter to continue.')
+
+
+## =========== Part 2: Regularized Linear Regression Cost =============
+#  You should now implement the cost function for regularized linear 
+#  regression. 
+#
+
+theta = np.array([1, 1])
+
+J = linearRegCostFunction.linearRegCostFunction( theta, np.c_[np.ones((m, 1)), X], y, 1)
+
+print('Cost at theta = [1 ; 1]: {:.6f} (this value should be about 303.993192)'.format(J))
+
+input('Program paused. Press enter to continue.\n')
+
+
+
+## =========== Part 3: Regularized Linear Regression Gradient =============
+#  You should now implement the gradient for regularized linear 
+#  regression.
+#
+theta = np.array([1, 1])
+
+grad = linearRegCostFunction.linearRegGradient(theta, np.c_[np.ones((m, 1)), X], y, 1)
+
+print('Cost at theta = [1 ; 1]: [{:.6f} {:.6f}] (this value should be about [-15.303016, 598.250744])'.format(grad[0], grad[1]))
+
+input('Program paused. Press enter to continue.\n')
 
