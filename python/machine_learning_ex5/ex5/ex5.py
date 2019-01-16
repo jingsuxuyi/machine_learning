@@ -20,6 +20,7 @@ import scipy.io as sio
 import matplotlib.pyplot as plt
 import linearRegCostFunction
 import trainLinearReg
+import learningCurve
 
 
 ## =========== Part 1: Loading and Visualizing Data =============
@@ -98,3 +99,30 @@ plt.xlabel('Change in water level (x)')
 plt.ylabel('Water flowing out of the dam (y)')
 plt.plot(X, np.c_[np.ones((m, 1)), X].dot(theta), '--', linewidth=2)
 input('Program paused. Press enter to continue.\n')
+
+
+## =========== Part 5: Learning Curve for Linear Regression =============
+#  Next, you should implement the learningCurve function. 
+#
+#  Write Up Note: Since the model is underfitting the data, we expect to
+#                 see a graph with "high bias" -- Figure 3 in ex5.pdf 
+#
+lam = 0
+
+error_train, error_val = learningCurve.learningCurve(np.c_[np.ones((m, 1)), X], 
+							y, np.c_[np.ones((yval.size, 1)), Xval], yval, lam)
+
+plt.figure()							
+plt.plot(np.arange(m)+1, error_train, label='Train')
+plt.plot(np.arange(m)+1, error_val,  label='Cross Validation')
+plt.title('Learning curve for linear regression')
+plt.legend()
+plt.xlabel('Number of training examples')
+plt.ylabel('Error')
+plt.axis([0, 13, 0, 150])
+
+print('# Training Examples\tTrain Error\tCross Validation Error\n')
+for i in np.arange(m):
+	print("\t{:d}\t\t{:f}\t{:f}".format(i, error_train[i], error_val[i]))
+	
+input("Program paused. Press enter to continue.\n")
