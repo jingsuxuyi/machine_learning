@@ -21,6 +21,8 @@ import matplotlib.pyplot as plt
 import linearRegCostFunction
 import trainLinearReg
 import learningCurve
+import polyFeatures
+import featureNormalize
 
 
 ## =========== Part 1: Loading and Visualizing Data =============
@@ -126,3 +128,31 @@ for i in np.arange(m):
 	print("\t{:d}\t\t{:f}\t{:f}".format(i, error_train[i], error_val[i]))
 	
 input("Program paused. Press enter to continue.\n")
+
+
+## =========== Part 6: Feature Mapping for Polynomial Regression =============
+#  One solution to this is to use polynomial regression. You should now
+#  complete polyFeatures to map each example into its powers
+#
+
+p = 8
+
+# Map X onto Polynomial Features and Normalize
+X_poly = polyFeatures.polyFeatures(X, p)
+X_poly, mu, sigma = featureNormalize.featureNormalize(X_poly)
+X_poly = np.c_[np.ones((m, 1)), X_poly]
+
+# Map X_poly_test and normalize (using mu and sigma)
+X_poly_test = polyFeatures.polyFeatures(Xtest, p)
+X_poly_test = (X_poly_test - mu) / sigma
+X_poly_test = np.c_[np.ones((X_poly_test.shape[0], 1)), X_poly_test]
+
+# Map X_poly_val and normalize (using mu and sigma)
+X_poly_val = polyFeatures.polyFeatures(Xval, p)
+X_poly_val = (X_poly_val - mu) / sigma
+X_poly_val = np.c_[np.ones((X_poly_val.shape[0], 1)), X_poly_val]
+
+print('Normalized Training Example 1:\n')
+print(X_poly[0, :])
+
+input('Program paused. Press enter to continue.\n')
