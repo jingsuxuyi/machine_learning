@@ -23,6 +23,7 @@ import trainLinearReg
 import learningCurve
 import polyFeatures
 import featureNormalize
+import plotFit
 
 
 ## =========== Part 1: Loading and Visualizing Data =============
@@ -156,3 +157,43 @@ print('Normalized Training Example 1:\n')
 print(X_poly[0, :])
 
 input('Program paused. Press enter to continue.\n')
+
+
+## =========== Part 7: Learning Curve for Polynomial Regression =============
+#  Now, you will get to experiment with polynomial regression with multiple
+#  values of lambda. The code below runs polynomial regression with 
+#  lambda = 0. You should try running the code with different values of
+#  lambda to see how the fit and learning curve change.
+#
+
+lam = 1
+
+theta = trainLinearReg.trainLinearReg(X_poly, y, lam)
+
+# Plot training data and fit
+plt.figure()
+plt.plot(X, y, 'rx', markersize=10, linewidth=1.5)
+plotFit.plotFit(np.min(X, axis=0), np.max(X, axis=0), mu, sigma, theta, p)
+plt.xlabel('Change in water level (x)')
+plt.ylabel('Water flowing out of the dam (y)')
+title_label = 'Polynomial Regression Learning Curve (lambda = {})'.format(lam)
+plt.title(title_label)
+
+plt.figure()
+error_train, error_val = learningCurve.learningCurve(X_poly, y, X_poly_val, yval, lam)
+plt.plot(np.arange(m)+1, error_train, label='Train')
+plt.plot(np.arange(m)+1, error_val,  label='Cross Validation')
+title_label = 'Polynomial Regression Learning Curve (lambda = {})'.format(lam)
+plt.title(title_label)
+plt.legend()
+plt.xlabel('Number of training examples')
+plt.ylabel('Error')
+plt.axis([0, 13, 0, 100])
+
+print('Polynomial Regression (lambda = {})'.format(lam))
+print('# Training Examples\tTrain Error\tCross Validation Error\n')
+for i in np.arange(m):
+	print("\t{:d}\t\t{:f}\t{:f}".format(i, error_train[i], error_val[i]))
+	
+input("Program paused. Press enter to continue.\n")
+
