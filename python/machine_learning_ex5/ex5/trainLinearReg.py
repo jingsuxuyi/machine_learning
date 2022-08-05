@@ -1,7 +1,7 @@
 import numpy as np
 import linearRegCostFunction
 import scipy.optimize as opt
-
+#test
 def trainLinearReg(X, y, lam):
 	#TRAINLINEARREG Trains linear regression given a dataset (X, y) and a
 	#regularization parameter lambda
